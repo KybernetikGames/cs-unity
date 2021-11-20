@@ -1,0 +1,350 @@
+﻿<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
+        <title>C# in Unity - Flow Control</title>
+        <link href="/cs-unity/assets/css/highlight.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/cs-unity/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/cs-unity/assets/css/override.css" rel="stylesheet">
+        <script src="/cs-unity/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/cs-unity/assets/js/bootstrap.min.js"></script>        
+        <script src="/cs-unity/assets/js/app.min.js"></script>         
+        <script src="/cs-unity/assets/js/highlight.pack.js"></script>   
+        <script src="/cs-unity/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/cs-unity/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/cs-unity/assets/js/mermaid.min.js"></script>
+        <script src="/cs-unity/assets/js/svg-pan-zoom.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/cs-unity/assets/js/html5shiv.min.js"></script>
+        <script src="/cs-unity/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/cs-unity/" class="logo">
+                            <span>C# in Unity</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li class="active"><a href="/cs-unity/docs"><img src="/cs-unity/images/docs.png" height="20px" width="7.5px" style="left:-5px"> Documentation</a></li>
+        <li><a href="mailto:mail@kybernetik.com.au"><img src="/cs-unity/images/contact.png" height="20px" width="19.6875px" style="left:-4px"> mail@kybernetik.com.au</a></li>
+        <li><a href="https://kybernetik.com.au"><img src="/cs-unity/images/kybernetik.png" height="20px" width="20px" style="left:-2px"> My Unity Assets</a></li>
+
+<li style="width:100%">
+<form class="search-form" name="search" action="/cs-unity/search">
+<span><input class="search-input" id="search" name="q" type="text" placeholder="Search..."></span>
+<div class="search-button"><button type="submit"><i class="fa fa-search"></i></button></div>
+</form>
+</li> 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+    <div id="infobar-headings"><h6>On This Page</h6><p><a href="#snippets">Snippets</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">    
+                                     
+                    
+
+                    <ul class="sidebar-menu">
+                        
+
+                <li class="treeview active">
+                    <a href="/cs-unity/docs/introduction">Introduction to C# in Unity</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/overview">Scripting Overview</a></li>
+                <li><a href="/cs-unity/docs/introduction/organization">Organization</a></li>
+                <li><a href="/cs-unity/docs/introduction/variables">Variables</a></li>
+                <li class="treeview active">
+                    <a href="/cs-unity/docs/introduction/methods">Methods</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/methods/parameters">Parameters</a></li>
+                <li class="selected"><a href="/cs-unity/docs/introduction/methods/flow-control">Flow Control</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/return">Return Values</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/constructors">Constructors</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/properties">Properties</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/overloads">Overloads</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/messages">Messages</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/delegates">Delegates</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/extension">Extension Methods</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/conditional">Conditional Compilation</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/expression-bodied">Expression Bodied Members</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/cs-unity/docs/introduction/inheritance">Inheritance</a></li>
+                <li><a href="/cs-unity/docs/introduction/vectors">Vectors</a></li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/introduction/other">Other Topics</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/other/comments">Comments</a></li>
+                <li><a href="/cs-unity/docs/introduction/other/exceptions">Exceptions</a></li>
+                <li><a href="/cs-unity/docs/introduction/other/debugging">Debuggers and Logging</a></li>
+                <li><a href="/cs-unity/docs/introduction/other/memory-management">Memory Management</a></li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/coding-standard">Coding Standard</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/coding-standard/naming">Naming</a></li>
+                <li><a href="/cs-unity/docs/coding-standard/comments">Comments</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/cs-unity/docs/default-script-template">Default Script Template</a></li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/component-referencing">Component Referencing</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/component-referencing/get-component">Get Component</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/get-component-cached">Get Component Cached</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/require-component">Require Component</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/serialize-field">Serialize Field</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/reset-method">Reset Method</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/onvalidate-method">On Validate Method</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/extension-methods">Extension Methods</a></li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                            
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+		<section class="content-header">
+			<h1>Flow Control</h1>
+		</section>
+	<section class="content">
+		<p>Instead of executing every instruction once each in the same order every time the program is run, you will often need to control the flow of the program to only do things under certain conditions or repeat the some instructions until a condition is met. The most common flow control <a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/statements">Statements</a> are:</p>
+<table class="table">
+<thead>
+<tr>
+<th>Keyword</th>
+<th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/if-else"><code>if else</code></a></td>
+<td>Execute some code depending on whether a condition is <code>true</code> or <code>false</code>. <code>if</code> statements used to assign a value can also be written using the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/conditional-operator">Conditional Operator</a>.</td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/switch"><code>switch</code></a></td>
+<td>A more complex form of <code>if</code> that allows you to choose between multiple cases (more than just <code>true</code> or <code>false</code>).</td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/while"><code>while</code></a></td>
+<td>Like <code>if</code>, but when it reaches the end of the code block it loops back to check the condition again. So if the condition is never false, it will get stuck in an "infinite loop" as it keeps executing the same code repeatedly without continuing on to run the rest of the program (meaning it looks like the program is frozen because it does not even get to render new frames to the screen).</td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/for"><code>for</code></a></td>
+<td>A more complex form of <code>while</code> which allows you to initialize variables before it starts, check a condition, and specify what happens at the end of the loop, all in one statement.</td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/foreach"><code>foreach</code></a></td>
+<td>Similar to <code>for</code>, but specifically used to iterate through every element in a collection (such as an <a href="../variables#arrays">Array</a>).</td>
+</tr>
+<tr>
+<td><a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/return"><code>return</code></a></td>
+<td>Immediately ends the current method. If the method has a non-<code>void</code> <a href="return">Return Type</a>, it must return a value of that type.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="snippets">Snippets</h1>
+<p>Most IDEs have ways to quickly insert default <a href="https://docs.microsoft.com/en-us/visualstudio/ide/code-snippets">Code Snippets</a> for common keywords. For example, in Visual Studio, you can:</p>
+<ol>
+<li>Type <code>switch</code>.</li>
+<li>Press <code>Tab</code> twice.</li>
+<li>Replace <code>switch_on</code> with the variable you want to target.</li>
+<li>Press <code>Enter</code>.</li>
+</ol>
+<p>That will insert the framework of a <code>switch</code> statement. This is especially useful when you want to use an <code>enum</code> as the target because it will automatically insert a <code>case</code> for every value in that <code>enum</code>.</p>
+<p><img src="switch-snippet.gif" class="img-responsive"></p>
+<p>The <code>for</code> snippet is also very useful for iterating through arrays and lists. It allows you to choose a name for its iterator variable (<code>i</code> by default) then press <code>Tab</code> to choose its <code>length</code> variable before you press <code>Enter</code> to complete the snippet:</p>
+<p><img src="for-snippet.gif" class="img-responsive"></p>
+<p>The <code>forr</code> snippet inserts a reversed <code>for</code> loop which starts at the end and iterates backwards to the start.</p>
+
+	</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                <strong>
+  <div style="text-align:left; display:flex">
+
+    <div>
+      <p>Contact</p>
+      <p>
+        <a href="mailto:mail@kybernetik.com.au">mail@kybernetik.com.au</a>
+      </p>
+    </div>
+
+    <div style="width:10%"></div>
+
+    <div>
+      <p>My Unity Assets</p>
+      <p>
+        <a href="/animancer">Animancer</a>
+      </p>
+      <p>
+        <a href="/inspector-gadgets">Inspector Gadgets</a>
+      </p>
+      <p>
+        <a href="/weaver">Weaver</a>
+      </p>
+    </div>
+
+    <div style="width:10%"></div>
+
+    <div>
+      <p>&nbsp;</p>
+      <p>
+        <a href="/ultevents">UltEvents</a>
+      </p>
+      <p>
+        <a href="https://assetstore.unity.com/packages/tools/version-control/link-sync-pro-72872?aid=1100l8ah5">Link &amp; Sync</a>
+      </p>
+      <p>
+        <a href="https://assetstore.unity.com/packages/vfx/shaders/simple-sun-shader-72042?aid=1100l8ah5">Simple Sun Shader</a>
+      </p>
+    </div>
+
+  </div>
+</strong>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).ready(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        useMaxWidth: false
+                    },
+					startOnLoad: false,
+					cloneCssStyles: false
+                });     
+                mermaid.init(undefined, ".mermaid");
+
+                // Remove the max-width setting that Mermaid sets
+                var mermaidSvg = $('.mermaid svg');
+                mermaidSvg.addClass('img-responsive');
+                mermaidSvg.css('max-width', '');
+
+                // Make it scrollable
+				var target = document.querySelector(".mermaid svg");
+				if(target !== null)
+				{
+					var panZoom = window.panZoom = svgPanZoom(target, {
+						zoomEnabled: true,
+						controlIconsEnabled: true,
+						fit: true,
+						center: true,
+                        maxZoom: 20,
+                        zoomScaleSensitivity: 0.6
+					});			                          
+
+                    // Do the reset once right away to fit the diagram
+                    panZoom.resize();
+                    panZoom.fit();
+                    panZoom.center();
+                    
+                    $(window).resize(function(){
+                        panZoom.resize();
+                        panZoom.fit();
+                        panZoom.center();
+                    });
+				}
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>

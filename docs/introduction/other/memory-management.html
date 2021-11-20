@@ -1,0 +1,323 @@
+﻿<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
+        <title>C# in Unity - Memory Management</title>
+        <link href="/cs-unity/assets/css/highlight.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/cs-unity/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/cs-unity/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/cs-unity/assets/css/override.css" rel="stylesheet">
+        <script src="/cs-unity/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/cs-unity/assets/js/bootstrap.min.js"></script>        
+        <script src="/cs-unity/assets/js/app.min.js"></script>         
+        <script src="/cs-unity/assets/js/highlight.pack.js"></script>   
+        <script src="/cs-unity/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/cs-unity/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/cs-unity/assets/js/mermaid.min.js"></script>
+        <script src="/cs-unity/assets/js/svg-pan-zoom.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/cs-unity/assets/js/html5shiv.min.js"></script>
+        <script src="/cs-unity/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/cs-unity/" class="logo">
+                            <span>C# in Unity</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li class="active"><a href="/cs-unity/docs"><img src="/cs-unity/images/docs.png" height="20px" width="7.5px" style="left:-5px"> Documentation</a></li>
+        <li><a href="mailto:mail@kybernetik.com.au"><img src="/cs-unity/images/contact.png" height="20px" width="19.6875px" style="left:-4px"> mail@kybernetik.com.au</a></li>
+        <li><a href="https://kybernetik.com.au"><img src="/cs-unity/images/kybernetik.png" height="20px" width="20px" style="left:-2px"> My Unity Assets</a></li>
+
+<li style="width:100%">
+<form class="search-form" name="search" action="/cs-unity/search">
+<span><input class="search-input" id="search" name="q" type="text" placeholder="Search..."></span>
+<div class="search-button"><button type="submit"><i class="fa fa-search"></i></button></div>
+</form>
+</li> 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+    <div id="infobar-headings"><h6>On This Page</h6><p><a href="#the-stack">The Stack</a></p>
+<p><a href="#the-heap">The Heap</a></p>
+<p><a href="#garbage-collection">Garbage Collection</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">    
+                                     
+                    
+
+                    <ul class="sidebar-menu">
+                        
+
+                <li class="treeview active">
+                    <a href="/cs-unity/docs/introduction">Introduction to C# in Unity</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/overview">Scripting Overview</a></li>
+                <li><a href="/cs-unity/docs/introduction/organization">Organization</a></li>
+                <li><a href="/cs-unity/docs/introduction/variables">Variables</a></li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/introduction/methods">Methods</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/methods/parameters">Parameters</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/flow-control">Flow Control</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/return">Return Values</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/constructors">Constructors</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/properties">Properties</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/overloads">Overloads</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/messages">Messages</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/delegates">Delegates</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/extension">Extension Methods</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/conditional">Conditional Compilation</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/expression-bodied">Expression Bodied Members</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/cs-unity/docs/introduction/inheritance">Inheritance</a></li>
+                <li><a href="/cs-unity/docs/introduction/vectors">Vectors</a></li>
+                <li class="treeview active">
+                    <a href="/cs-unity/docs/introduction/other">Other Topics</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/introduction/other/comments">Comments</a></li>
+                <li><a href="/cs-unity/docs/introduction/other/exceptions">Exceptions</a></li>
+                <li><a href="/cs-unity/docs/introduction/other/debugging">Debuggers and Logging</a></li>
+                <li class="selected"><a href="/cs-unity/docs/introduction/other/memory-management">Memory Management</a></li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                </li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/coding-standard">Coding Standard</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/coding-standard/naming">Naming</a></li>
+                <li><a href="/cs-unity/docs/coding-standard/comments">Comments</a></li>
+
+                    </ul>
+                </li>
+                <li><a href="/cs-unity/docs/default-script-template">Default Script Template</a></li>
+                <li class="treeview">
+                    <a href="/cs-unity/docs/component-referencing">Component Referencing</a> <a href="#" class="expand"></a>
+                    <ul class="treeview-menu">
+                        
+                <li><a href="/cs-unity/docs/component-referencing/get-component">Get Component</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/get-component-cached">Get Component Cached</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/require-component">Require Component</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/serialize-field">Serialize Field</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/reset-method">Reset Method</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/onvalidate-method">On Validate Method</a></li>
+                <li><a href="/cs-unity/docs/component-referencing/extension-methods">Extension Methods</a></li>
+
+                    </ul>
+                </li>
+
+                    </ul>
+                            
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+		<section class="content-header">
+			<h1>Memory Management</h1>
+		</section>
+	<section class="content">
+		<p>Every variable needs to be allocated some space in the computer's RAM and then de-allocated when it is no longer needed so that space can be reused for other variables. C# automates this process so you do not generally need to worry about it except to note that it has a performance cost which can be very significant in some cases. The Unity Manual has a more extensive page about <a href="https://docs.unity3d.com/Manual/UnderstandingAutomaticMemoryManagement">Automatic Memory Management</a>, but this section goes over the main points.</p>
+<p>There are two general types of memory: the <a href="#stack">Stack</a> and the <a href="#heap">Heap</a>.</p>
+<h1 id="the-stack">The Stack</h1>
+<p>When a <a href="../methods">Method</a> declares a <a href="../organization#values-and-references">Value Type</a> local variable, it will need to allocate a specific amount of memory for it. For example, an <code>int</code> takes 4 bytes while the size of a <code>struct</code> is determined by the types of its fields. Since that variable will only exist for the duration of the method, managing it is simple: you allocate memory for it when the method is called and de-allocate that memory when the method ends. If the method calls another method, the other method can allocate any of its local variables using the next available memory region. This type of memory is called the <strong>Stack</strong> because each new variable is allocated into the next available section of memory as if you had a <em>stack</em> of boxes. You can add a box to the top or you can remove the top box, but nothing can remove a box from the middle of the <em>stack</em>. It does not matter what size a new box is because it can always simply go on top of the previous one. This simplicity makes it very fast to execute.</p>
+<h1 id="the-heap">The Heap</h1>
+<p>When you create an instance of a <a href="../organization#values-and-references">Reference Type</a>, its lifetime is not so clearly defined. You <em>might</em> do nothing with it so it could be de-allocated when the method ends, but more than likely you will give something else a reference to it so it might last until an enemy is killed or the level is unloaded or even until the whole application is closed. This makes the memory management process far more complicated:</p>
+<ul>
+<li>New objects cannot simply be allocated in the next available space. If you allocate a small object and a large one then de-allocate the small one, a new small object can be allocated in that same space but a new large object cannot.</li>
+<li>It is no longer clear when exactly an object can be deallocated so it needs to check whether or not anything else is referencing that object. This process is called <a href="#garbage-collection">Garbage Collection</a> and is the primary performance concern of this topic.</li>
+</ul>
+<p>Unlike local variables, a <a href="../organization#values-and-references">Value Type</a> used as a field in a <a href="../organization#values-and-references">Reference Type</a> will be part of the memory allocated for that type and will therefore be on the heap.</p>
+<h1 id="garbage-collection">Garbage Collection</h1>
+<p>The <a href="https://docs.microsoft.com/en-us/dotnet/standard/garbage-collection">Garbage Collector</a> is an automated runtime system that periodically checks through everything in the <a href="#heap">Heap</a>. Any object that has nothing left referencing it can no longer be used by anything so it is considered to be <em>garbage</em> which can be <em>collected</em> (de-allocated so that the memory it occupied can be reused in the future). It also needs to account for the possibility that two objects might reference each other even though nothing else has a reference to either of them, in which case they are still <em>garbage</em>. This process is quite complex and can take a significant amount of time to execute, meaning that it can cause the frame in which it runs to take much longer than other frames, which users might notice as a <em>stutter</em> or <em>lag</em> in the game.</p>
+<p>The main way you can avoid this performance issue is by avoiding the creation of <em>garbage</em>. Note that the performance cost is often insignificant and many people advise against trying to optimise things like this unless you actually find a problem occuring because optimisations generally involve adding more complexity to your program and therefore create more potential for bugs to occur.</p>
+<ul>
+<li><a href="https://learn.unity.com/tutorial/object-pooling">Object Pooling</a> is a common strategy for reducing <em>garbage</em> by adding objects to a collection when they are no longer needed so that they are not <em>garbage</em> and can later be reused when another object is needed instead of allocating a new one. Animancer uses a very simple <code>ObjectPool</code> system for some tasks.</li>
+<li><code>string</code>s are a common source of <em>garbage</em>. Using <a href="https://docs.microsoft.com/en-us/dotnet/api/system.string.concat"><code>String.Concat</code></a> or a <a href="https://docs.microsoft.com/en-us/dotnet/api/system.text.stringbuilder"><code>StringBuilder</code></a> can help you build <code>string</code>s more efficiently (<a href="https://docs.microsoft.com/en-us/dotnet/api/system.text.stringbuilder#StringAndSB">this section describes their differences</a>)</li>
+<li><a href="../methods/delegates">Delegates</a> are another common source of <em>garbage</em>. <a href="/animancer/docs/manual/events/animancer#garbage">The Animancer Events page has a section which explains how to avoid creating garbage when using them</a>.</li>
+</ul>
+
+	</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                <strong>
+  <div style="text-align:left; display:flex">
+
+    <div>
+      <p>Contact</p>
+      <p>
+        <a href="mailto:mail@kybernetik.com.au">mail@kybernetik.com.au</a>
+      </p>
+    </div>
+
+    <div style="width:10%"></div>
+
+    <div>
+      <p>My Unity Assets</p>
+      <p>
+        <a href="/animancer">Animancer</a>
+      </p>
+      <p>
+        <a href="/inspector-gadgets">Inspector Gadgets</a>
+      </p>
+      <p>
+        <a href="/weaver">Weaver</a>
+      </p>
+    </div>
+
+    <div style="width:10%"></div>
+
+    <div>
+      <p>&nbsp;</p>
+      <p>
+        <a href="/ultevents">UltEvents</a>
+      </p>
+      <p>
+        <a href="https://assetstore.unity.com/packages/tools/version-control/link-sync-pro-72872?aid=1100l8ah5">Link &amp; Sync</a>
+      </p>
+      <p>
+        <a href="https://assetstore.unity.com/packages/vfx/shaders/simple-sun-shader-72042?aid=1100l8ah5">Simple Sun Shader</a>
+      </p>
+    </div>
+
+  </div>
+</strong>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).ready(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        useMaxWidth: false
+                    },
+					startOnLoad: false,
+					cloneCssStyles: false
+                });     
+                mermaid.init(undefined, ".mermaid");
+
+                // Remove the max-width setting that Mermaid sets
+                var mermaidSvg = $('.mermaid svg');
+                mermaidSvg.addClass('img-responsive');
+                mermaidSvg.css('max-width', '');
+
+                // Make it scrollable
+				var target = document.querySelector(".mermaid svg");
+				if(target !== null)
+				{
+					var panZoom = window.panZoom = svgPanZoom(target, {
+						zoomEnabled: true,
+						controlIconsEnabled: true,
+						fit: true,
+						center: true,
+                        maxZoom: 20,
+                        zoomScaleSensitivity: 0.6
+					});			                          
+
+                    // Do the reset once right away to fit the diagram
+                    panZoom.resize();
+                    panZoom.fit();
+                    panZoom.center();
+                    
+                    $(window).resize(function(){
+                        panZoom.resize();
+                        panZoom.fit();
+                        panZoom.center();
+                    });
+				}
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>

@@ -79,6 +79,8 @@
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
     <div id="infobar-headings"><h6>On This Page</h6><p><a href="#arithmetic">Arithmetic</a></p>
+<p><a href="#difference">Difference</a></p>
+<p><a href="#equality">Equality</a></p>
 <p><a href="#magnitude">Magnitude</a></p>
 <p><a href="#normalization">Normalization</a></p>
 <p><a href="#dot-product">Dot Product</a></p>
@@ -221,14 +223,9 @@
 <td><code>vector, float</code></td>
 <td>A <code>vector</code> with the values of the input <code>vector</code> each divided by the input <code>float</code>. This esentially divides its <a href="#magnitude">Magnitude</a> by that value.</td>
 </tr>
-<tr>
-<td><code>==</code></td>
-<td><code>vector, vector</code></td>
-<td><code>true</code> if each of the values of the input <code>vector</code>s are <strong>approximately</strong> equal, otherwise <code>false</code>. This is actually very unhelpful because it uses an entirely arbitrary threshold to define how close "approximately equal" is. The <em>equality</em> operator should be checking for <em>equality</em>, not <em>approximate equality</em>.</td>
-</tr>
 </tbody>
 </table>
-<h2 id="difference">Difference</h2>
+<h1 id="difference">Difference</h1>
 <p>One particularly useful property of vector subtraction is that it calculates the difference between two values, such as the offset from one position to another or the difference between the velocity of two objects. A vector going from <code>a</code> to <code>b</code> is calculated using <code>b - a</code>. For example:</p>
 <table class="table">
   <thead>
@@ -260,6 +257,11 @@ Vector2 difference = b - a;
     </tr>
   </tbody>
 </table>
+<h1 id="equality">Equality</h1>
+<p>If you have two <code>float</code>s <code>a</code> and <code>b</code> then <code>a == b</code> will be <code>true</code> if those two variables are <strong>exactly</strong> equal.</p>
+<p>But in Unity's vector types the <code>==</code> operator actually checks if they are <strong>approximately</strong> equal.</p>
+<p>This is very unhelpful because it uses an entirely arbitrary threshold to define how close "approximately equal" is. The <em>equality</em> operator should be checking for <em>equality</em>, not <em>approximate equality</em>.</p>
+<p>Fortunately, this approximation can be avoided by using <code>vectorA.Equals(vectorB)</code> instead of <code>vectorA == vectorB</code> because the <code>Equals</code> method in those types does check actual equality.</p>
 <h1 id="magnitude">Magnitude</h1>
 <p>If you think of a <code>Vector2</code> as a right-angled triangle where its <code>x</code> value is the length of one side and its <code>y</code> value is the length of another side, then you can calculate the length of the hypotenuse using the <a href="https://en.wikipedia.org/wiki/Pythagorean_theorem">Pythagorean Theorem</a>:</p>
 <pre><code class="language-cs">// 2D:

@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/cs-unity/assets/img/favicon.ico" type="image/x-icon">
-        <title>C# in Unity - Parameters</title>
+        <title>C# in Unity - Asset Referencing</title>
         <link href="/cs-unity/assets/css/highlight.css" rel="stylesheet">
         <link href="/cs-unity/assets/css/bootstrap/bootstrap.css" rel="stylesheet" />
         <link href="/cs-unity/assets/css/adminlte/AdminLTE.css" rel="stylesheet" />
@@ -90,18 +90,18 @@
                     <ul class="sidebar-menu">
                         
 
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="/cs-unity/docs/introduction">Introduction to C# in Unity</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
                 <li><a href="/cs-unity/docs/introduction/overview">Scripting Overview</a></li>
                 <li><a href="/cs-unity/docs/introduction/organization">Organization</a></li>
                 <li><a href="/cs-unity/docs/introduction/variables">Variables</a></li>
-                <li class="treeview active">
+                <li class="treeview">
                     <a href="/cs-unity/docs/introduction/methods">Methods</a> <a href="#" class="expand"></a>
                     <ul class="treeview-menu">
                         
-                <li class="selected"><a href="/cs-unity/docs/introduction/methods/parameters">Parameters</a></li>
+                <li><a href="/cs-unity/docs/introduction/methods/parameters">Parameters</a></li>
                 <li><a href="/cs-unity/docs/introduction/methods/flow-control">Flow Control</a></li>
                 <li><a href="/cs-unity/docs/introduction/methods/return">Return Values</a></li>
                 <li><a href="/cs-unity/docs/introduction/methods/constructors">Constructors</a></li>
@@ -155,7 +155,7 @@
 
                     </ul>
                 </li>
-                <li><a href="/cs-unity/docs/asset-referencing">Asset Referencing</a></li>
+                <li class="selected"><a href="/cs-unity/docs/asset-referencing">Asset Referencing</a></li>
 
                     </ul>
                             
@@ -169,32 +169,87 @@
 
 
 		<section class="content-header">
-			<h1>Parameters</h1>
+			<h1>Asset Referencing</h1>
 		</section>
 	<section class="content">
-		<p><a href="https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/passing-parameters">Parameters</a> allow <a href="../variables">Variables</a> to be passed into a method by the caller. For example:</p>
-<pre><code class="language-cs"><a href="organization#namespaces">using UnityEngine;</a>
-
-public class Example : <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour">MonoBehaviour</a>
-{
-    private int _Counter;
-
-    // _Counter starts at 0.
-
-    private void <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html">Awake</a>()
-    {
-        // Call the AddValue method using 2 as the "value" parameter.
-        AddValue(2);
-        // _Counter is now 2.
-    }
-
-    private void AddValue(int value)
-    {
-        // Add the given "value" to the "_Counter".
-        _Counter += value;
-    }
-}
-</code></pre>
+		<p>An &quot;asset&quot; in Unity is file in the Project window such as an <code>AnimationClip</code>, <code>Texture</code>, <a href="https://docs.unity3d.com/Manual/Prefabs.html">Prefab</a>, or any script which inherits from <a href="https://docs.unity3d.com/Manual/class-ScriptableObject.html"><code>ScriptableObject</code></a>.</p>
+<table class="table">
+  <thead><tr>
+    <th>Approach</th>
+    <th>Advantages</th>
+    <th>Disadvantages</th>
+  </tr></thead>
+  <tbody>
+    <tr>
+      <td><a href="introduction/variables#serialized-fields">Serialized Fields</a></td>
+      <td><ul>
+        <li>Very easy to use. Just add a serialized field to your script then drag and drop the asset you want into that field in the Inspector.</li>
+        <li>You can see which asset is being referenced just be looking at your script in the Inspector.</li>
+        <li>When your script is loaded it will automatically load all the assets it references as well.</li>
+      </ul></td>
+      <td><ul>
+        <li>Loading all the referenced assets immediately will cost some loading time and use additional memory even before those assets are actually used.</li>
+        <li>Only works on instance fields (not <a href="introduction/organization#static">Static Fields</a> or <a href="introduction/methods/properties">Properties</a>) so every instance of a script will always have its own reference instead of being able to assign one asset for every instance to use.</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td><a href="/weaver/docs/asset-injection">Asset Injection</a></td>
+      <td><ul>
+        <li>Used similar to <a href="introduction/variables#serialized-fields">Serialized Fields</a>, but used for static fields (or properties) and instead of assigning the asset reference in the Inspector you assign it in the <a href="/weaver/docs/asset-injection/using-asset-injection#injectors-panel">Injectors Panel in the Weaver Window</a>.</li>
+        <li>Allows an asset to be assigned globally instead of having a separate reference for each instance of your script (basically, it avoids the disadvantages of <a href="introduction/variables#serialized-fields">Serialized Fields</a>).</li>
+        <li>An asset assigned for injection will show an <a href="/weaver/docs/asset-injection/injection-attribute-types">Overlay Icon</a> in the Project window so that you know with a tooltip explaining exactly what it is linked to.</li>
+        <li>You can make it only load the asset when it is actually needed by using <a href="/weaver/api/Weaver/Asset_1/"><code>Asset&lt;T&gt;</code></a> as the field type (see <a href="/weaver/docs/asset-injection/injection-attribute-types">Injection Attribute Types</a> for more information).</li>
+      </ul></td>
+      <td><ul>
+        <li>Requires you to purchase <a href="/weaver/pro">Weaver Pro</a> (a plugin made by the author of this site).</li>
+        <li>Only works on static fields and properties (just use <a href="introduction/variables#serialized-fields">Serialized Fields</a> for instance fields).</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td><a href="/weaver/docs/asset-lists">Asset Lists</a></td>
+      <td><ul>
+        <li>Allows you to create a list which will automatically contain all assets of a particular type in a target folder.</li>
+      </ul></td>
+      <td><ul>
+        <li>Requires you to purchase <a href="/weaver/pro">Weaver Pro</a> (a plugin made by the author of this site).</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.unity3d.com/ScriptReference/Resources.html">Resources</a></td>
+      <td><ul>
+        <li>Fairly easy to use. Just put the asset in a folder called <em>"Resources"</em> and call <a href="https://docs.unity3d.com/ScriptReference/Resources.Load.html"><code>Resources.Load</code></a> when you want to load it.</li>
+        <li>You get to choose when to pay the performance cost of loading an asset.</li>
+      </ul></td>
+      <td><ul>
+        <li>Relies on hard coded resource path strings.</li>
+        <li>Nothing in the Unity Editor gives any indication that an asset will actually be loaded as a resource.</li>
+        <li>Everything in a <em>"Resources"</em> folder will always be included in a Runtime Build, even if there is no script that will ever load it, which will add unnecessary size to builds if you don't keep your project clean.</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html">Asset Bundles</a></td>
+      <td><ul>
+        <li>You get to choose when to pay the performance cost of loading an asset.</li>
+        <li>Reduces the initial download/install size of your application.</li>
+        <li>You can provide a different Asset Bundle for each platform containing assets which are designed and optimized specifically for that platform.</li>
+        <li>Can be used to implement downloadable content (DLC) and mods.</li>
+      </ul></td>
+      <td><ul>
+        <li>You need to manage distribution of the bundles in addition to the distribution of your actual project which makes them much more complicated to use than the alternatives listed above. This usually involves uploading the bundles to a server and implementing code in your project to download them.</li>
+      </ul></td>
+    </tr>
+    <tr>
+      <td><a href="https://docs.unity3d.com/Manual/com.unity.addressables.html">Addressables</a></td>
+      <td><ul>
+        <li>Greatly simplifies the way <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html">Asset Bundles</a> can be used.</li>
+      </ul></td>
+      <td><ul>
+        <li>More complicated to learn than just using <a href="https://docs.unity3d.com/Manual/AssetBundlesIntro.html">Asset Bundles</a> directly (though the result is generally worth it).</li>
+      </ul></td>
+    </tr>
+  </tbody>
+</table>
+<p>Unity's <a href="https://learn.unity.com/tutorial/assets-resources-and-assetbundles">Assets, Resources and AssetBundles</a> tutorial explains how those systems work in more detail.</p>
 
 	</section>
                 

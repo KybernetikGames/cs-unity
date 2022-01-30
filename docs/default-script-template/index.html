@@ -79,7 +79,6 @@
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
     <div id="infobar-headings"><h6>On This Page</h6><p><a href="#why-only-using-unityengine">Why only <code>using UnityEngine;</code>?</a></p>
-<p><a href="#why-sealed">Why <code>sealed</code>?</a></p>
 <p><a href="#why">Why <code>/*************...</code>?</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -157,6 +156,7 @@
 
                     </ul>
                 </li>
+                <li><a href="/cs-unity/docs/asset-referencing">Asset Referencing</a></li>
 
                     </ul>
                             
@@ -186,7 +186,7 @@
 <pre><code style="white-space:pre">using UnityEngine;
 
 #ROOTNAMESPACEBEGIN#
-public sealed class #SCRIPTNAME# : MonoBehaviour
+public class #SCRIPTNAME# : MonoBehaviour
 {
     /************************************************************************************************************************/
 
@@ -197,17 +197,6 @@ public sealed class #SCRIPTNAME# : MonoBehaviour
 <h1 id="why-only-using-unityengine">Why only <code>using UnityEngine;</code>?</h1>
 <p>Visual Studio (and other IDEs) can automatically list types that contain a given sub-string, including ones in namespaces that do not yet have <code>using</code> statements in the current file and will automatically add such statements if necessary. This means the only <code>using</code> statement we need in a script by default is <code>UnityEngine</code> for the <code>MonoBehaviour</code> class.</p>
 <img src="pick-type.gif" class="img-responsive">
-<h1 id="why-sealed">Why <code>sealed</code>?</h1>
-<ul>
-<li>By default, any class in C# can be <a href="../introduction/inheritance">Inherited</a>.</li>
-<li>This is often problematic since a class that was not designed to be <a href="../introduction/inheritance">Inherited</a> may behave unexpectedly.</li>
-<li>The <code>sealed</code> keyword prevents the class from being <a href="../introduction/inheritance">Inherited</a>.</li>
-<li>Having everything <code>sealed</code> by default is much safer. If you want to <a href="../introduction/inheritance">Inherit</a> from a <code>sealed</code> class, you can simply remove that keyword. When doing so, it is worth having a quick look over the class to see if there is anything that should be made <code>protected</code> and/or <code>virtual</code>.
-<ul>
-<li>In particular, <code>MonoBehaviour</code> event methods like <code>Awake</code>, <code>OnEnable</code>, etc. should generally have both of those keywords in a class that can be inherited. They do not need to be <code>public</code> for Unity to call them and your other scripts do not generally need to call them either. But if you have a <code>private</code> method in the base class, you can put another method with the same name in the child class without ever noticing and Unity will only call the child method, which often results in a bug. So by changing them to <code>protected virtual</code> when you remove the <code>sealed</code> keyword you ensure that you get compiler warnings immediately if the child class tries to use the same method without overriding it correctly.</li>
-</ul>
-</li>
-</ul>
 <h1 id="why">Why <code>/*************...</code>?</h1>
 <ul>
 <li>These are Comment Separators which help to improve code readability as explained by the <a href="../coding-standard">Coding Standard</a>.</li>

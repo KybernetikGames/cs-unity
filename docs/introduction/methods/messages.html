@@ -185,9 +185,89 @@
 <p>When an object with that component attached is created (such as when loading a scene or instantiating a copy of a prefab), Unity will automatically call that <code>Awake</code> method because its name matches the <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html"><code>MonoBehaviour.Awake</code></a> message.</p>
 <p>Receiving a message does not use the <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/keywords/override"><code>override</code></a> <a href="../inheritance#keywords">Keyword</a> like you would for a normal inherited method, you simply declare a method with the appropriate name and parameters (usually none, but check the documentation for the specific message you are receiving) as shown above.</p>
 <h1 id="access-modifiers">Access Modifiers</h1>
-<p>Unity doesn't check the method's <a href="../organization#access-modifiers">Access Modifier</a>, which means you can make them non-<code>public</code> to prevent other scripts from calling them while Unity can still call them properly.</p>
-<p>If a class is not <code>sealed</code> (meaning that is can be <a href="../organization#inheritance">Inherited</a>), then its messages should use the <code>protected</code> <a href="../organization#access-modifiers">Access Modifier</a>. Using <code>private</code> would mean that a child class can declare a message without knowing that the base class has the same one and Unity will only call the method in the child class, which almost always causes a but because the base class never receives a message it was expecting. So using <code>protected</code> prevents other scripts from calling the method while ensuring that child classes are aware when they use the same message as their base class and if necessary the base method can be given the <code>virtual</code> modifier for the child class to <code>override</code> and call the <code>base.Method();</code>.</p>
-<p>If a class is <code>sealed</code> (meaning that is can't be <a href="../organization#inheritance">Inherited</a>), then its messages should use the <code>private</code> <a href="../organization#access-modifiers">Access Modifier</a> because using <code>protected</code> would give compiler warning <a href="https://docs.microsoft.com/en-us/dotnet/csharp/misc/cs0628">CS0628: new protected member declared in sealed class</a>.</p>
+<blockquote class="blockquote">
+<p>In general, most messages should be declared as <code>protected virtual</code>.</p>
+</blockquote>
+<p>The rest of this section explains why that's the case and requires a basic understanding of <a href="../organization#inheritance">Inheritance</a>.</p>
+<h2 id="dont-make-them-public">Don't make them public</h2>
+<p>Unity doesn't check the method's <a href="../organization#access-modifiers">Access Modifier</a>, which means they don't need to be <code>public</code> and therefore shouldn't be <code>public</code> in order to prevent other scripts from calling them unexpectedly while Unity can still call them properly.</p>
+<p>The obvious exception to this is if you want to directly call a messasge method from another script. That's not very common, but if you have a good reason for it then you can simply make the method <code>public</code>.</p>
+<h2 id="definitely-dont-make-them-private">Definitely don't make them private</h2>
+<p><code>private</code> is actually the worst option for messages because it can lead to your code not getting called if the script is <a href="../organization#inheritance">Inherited</a>. For example:</p>
+<pre><code class="language-cs">public class BaseClass : MonoBehaviour
+{
+    private bool _IsAwake;
+
+    private void Awake()
+    {
+        _IsAwake = true;
+        Debug.Log("BaseClass.Awake");
+    }
+
+    private void Update()
+    {
+        Debug.Log(_IsAwake);
+    }
+}
+</code></pre>
+<ul>
+<li>Unity will never call a script's <code>Update</code> before its <code>Awake</code>, so if you just look at <code>BaseClass</code> its <code>Update</code> method should always log <code>true</code>.</li>
+</ul>
+<pre><code class="language-cs">public class ChildClass : BaseClass
+{
+    private void Awake()
+    {
+        Debug.Log("ChildClass.Awake");
+    }
+}
+</code></pre>
+<ul>
+<li>But this <code>ChildClass</code> also has a method called <code>Awake</code> so if you attach it to an object, Unity will call its <code>Awake</code> method <strong>and never call the <code>BaseClass.Awake</code> method</strong>.</li>
+<li>The <code>ChildClass</code> still inherits the <code>Update</code> method though, so now it will log <code>false</code> even though it seems like that shouldn't be possible if you only look at the <code>BaseClass</code>.</li>
+<li>And because <code>BaseClass.Awake</code> is <code>private</code>, you can't even call it manually from inside <code>ChildClass.Awake</code>.</li>
+<li>This code compiles perfectly fine, but it almost always leads to unintended behaviour. So instead of <code>private</code>, you should:</li>
+</ul>
+<h2 id="make-them-protected">Make them protected</h2>
+<ul>
+<li>If you change the methods in the above example to <code>protected</code>, then the <code>ChildClass.Awake</code> method will give compiler warning <a href="https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-messages/cs0108">CS0108: 'ChildClass.Awake' <strong>hides inherited member</strong> 'BaseClass.Awake'</a>.
+<ul>
+<li>Even though it's only a warning, that immediately tells you there's something you should fix. Don't just ignore warnings, they exist for a reason.</li>
+<li>The warning message also says <em>"Use the new keyword if hiding was intended"</em>, but as described above, having the child method "hide" the base method is generally not the intended behaviour.</li>
+</ul>
+</li>
+<li>Usually, the intended behaviour is for both <code>BaseClass.Awake</code> and <code>ChildClass.Awake</code> to get called, and the correct way to do that is with <code>virtual</code> and <code>override</code> like so:</li>
+</ul>
+<pre><code class="language-cs">// Make the base methods 'virtual' to indicate that they can be overridden.
+public class BaseClass : MonoBehaviour
+{
+    private bool _IsAwake;
+
+    protected virtual void Awake()
+    {
+        _IsAwake = true;
+        Debug.Log("BaseClass.Awake");
+    }
+
+    protected virtual void Update()
+    {
+        Debug.Log(_IsAwake);
+    }
+}
+
+public class ChildClass : BaseClass
+{
+    // Make the child method 'override' to indicate that it's replacing a base method.
+    protected override void Awake()
+    {
+        // Unity will still only call this child method.
+        // So if we want both, we need to explicitly call the base method.
+        base.Awake();
+
+        Debug.Log("ChildClass.Awake");
+    }
+}
+</code></pre>
+<p>Normally, calling a <code>virtual</code> method is slightly slower than calling a regular method because it needs to figure out which method to actually call based on whether the given object is a <code>BaseClass</code> or a <code>ChildClass</code>. But that doesn't matter for Unity's messages because it's already doing that anyway, so there's no additional cost for making these methods <code>virtual</code>.</p>
 <h1 id="common-messages">Common Messages</h1>
 <p>The <a href="https://docs.unity3d.com/ScriptReference/MonoBehaviour.html"><code>MonoBehaviour</code></a> page in Unity's API documentation list all of the Messages they can receive, but here are the most common ones:</p>
 <table class="table">
